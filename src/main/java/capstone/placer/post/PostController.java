@@ -11,18 +11,18 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/post")
+@RequestMapping("/posts")
 public class PostController {
 
     private final PostService postService;
 
-    @GetMapping("get/{page}")
+    @GetMapping("/get/{page}")
     public List<Post> get(@PathVariable int page) {
         Paging paging = new Paging(page);
         return postService.get(paging);
     }
 
-    @GetMapping("getDetail/{postId}")
+    @GetMapping("/getDetail/{postId}")
     public PostDetail getDetail(@PathVariable int postId) {
         return postService.getDetail(postId);
     }
