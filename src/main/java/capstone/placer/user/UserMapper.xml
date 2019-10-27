@@ -7,6 +7,7 @@
     <select id="get" resultType="capstone.placer.user.User">
         SELECT *
         FROM placer.`User`
+        WHERE id = #{id}
     </select>
 
     <select id="getMatchMailCount" resultType="Integer">
@@ -16,6 +17,11 @@
     </select>
     <select id="getEncryptedPassword" resultType="java.lang.String">
         SELECT password
+        FROM placer.`User`
+        WHERE mail = #{mail}
+    </select>
+    <select id="getByMail" resultType="capstone.placer.user.User">
+        SELECT *
         FROM placer.`User`
         WHERE mail = #{mail}
     </select>

@@ -16,8 +16,8 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public List<User> get() {
-        return userMapper.get();
+    public List<User> get(long id) {
+        return userMapper.get(id);
     }
 
     public boolean register(String nickname, String mail, String password) {
@@ -35,13 +35,16 @@ public class UserService {
         return true;
     }
 
-    public boolean login(String mail, String password) {
+    public User login(String mail, String password) {
 
         // mail validation
         if (userMapper.getMatchMailCount(mail) != 1)
-            return false;
+            return null;
 
         String encryptedPassword = userMapper.getEncryptedPassword(mail);
-        return passwordEncoder.matches(password, encryptedPassword);
+        if (passwordEncoder.matches(password, encryptedPassword)) {
+            return userMapper.getByMail(mail);
+        }
+        else return null;
     }
 }

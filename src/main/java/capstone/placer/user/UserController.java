@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
@@ -13,9 +14,9 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/get")
-    public List<User> get() {
-        return userService.get();
+    @GetMapping("/get/{id}")
+    public List<User> get(@PathVariable long id) {
+        return userService.get(id);
     }
 
     @PostMapping("/register")
@@ -25,10 +26,9 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public boolean login(@RequestParam("mail")String mail, @RequestParam("password")String password) {
-        boolean loginAccepted = userService.login(mail, password);
-        if (!loginAccepted) throw new LoginFailedException("login failed");
-
-        return true;
+    public User login(@RequestParam("mail")String mail, @RequestParam("password")String password) {
+        User user = userService.login(mail, password);
+        if (Objects.isNull(user)) throw new LoginFailedException("login failed");
+        return user;
     }
 }

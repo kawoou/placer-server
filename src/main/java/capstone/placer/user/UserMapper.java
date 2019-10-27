@@ -6,7 +6,9 @@ import java.util.List;
 
 @Mapper
 public interface UserMapper {
-    List<User> get();
+    List<User> get(long id);
+
+    User getByMail(String mail);
 
     int getMatchMailCount(String mail);
 
