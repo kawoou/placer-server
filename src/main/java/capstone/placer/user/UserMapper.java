@@ -2,8 +2,15 @@ package capstone.placer.user;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface UserMapper {
+    List<User> get();
 
-    int register(User user) throws Exception;
+    int getMatchMailCount(String mail);
+
+    String getEncryptedPassword(String mail);
+
+    void insertNewUser(User user);
 }
