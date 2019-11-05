@@ -68,7 +68,7 @@ public class Hex {
         return new Hex(qi, ri);
     }
 
-    public ArrayList<Integer> htop() {
+    public ArrayList<Integer> htol() {
         ArrayList<Integer> coord = new ArrayList<Integer>();
         coord.add(this.q);
         coord.add(this.r);
