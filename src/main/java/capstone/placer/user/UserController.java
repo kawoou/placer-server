@@ -20,13 +20,13 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public boolean register(@RequestParam("nickname")String nickname, @RequestParam("mail")String mail, @RequestParam("password") String password) {
+    public boolean register(@RequestParam("nickname") String nickname, @RequestParam("mail") String mail, @RequestParam("password") String password) {
         boolean registered = userService.register(nickname, mail, password);
         return registered;
     }
 
     @PostMapping("/login")
-    public User login(@RequestParam("mail")String mail, @RequestParam("password")String password) {
+    public User login(@RequestParam("mail") String mail, @RequestParam("password") String password) {
         User user = userService.login(mail, password);
         if (Objects.isNull(user)) throw new LoginFailedException("login failed");
         return user;

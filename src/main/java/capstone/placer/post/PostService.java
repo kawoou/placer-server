@@ -14,7 +14,7 @@ public class PostService {
     private final PostDetailMapper postDetailMapper;
 
     public List<Post> get(Paging paging) {
-       return postMapper.get(paging.getPageNumber(), Paging.PAGE_SIZE);
+        return postMapper.get(paging.getPageNumber(), Paging.PAGE_SIZE);
     }
 
     public PostDetail getDetail(int postId) {

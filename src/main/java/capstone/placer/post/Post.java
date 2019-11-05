@@ -14,6 +14,7 @@ public class Post {
         this.createdAt = System.currentTimeMillis();
         this.comment = comment;
     }
+
     @NonNull
     private long id;
 
