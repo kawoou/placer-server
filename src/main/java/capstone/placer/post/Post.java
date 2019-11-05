@@ -7,6 +7,13 @@ import org.springframework.lang.Nullable;
 @Data
 public class Post {
 
+    public Post(String writerNickName, String address, String comment) {
+        this.writerNickName = writerNickName;
+        this.address = address;
+        this.like = 0;
+        this.createdAt = System.currentTimeMillis();
+        this.comment = comment;
+    }
     @NonNull
     private long id;
 

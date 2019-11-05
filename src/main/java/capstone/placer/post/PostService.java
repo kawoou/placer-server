@@ -21,4 +21,11 @@ public class PostService {
         return postDetailMapper.getDetail(postId);
     }
 
+    public Post insert(Post post) {
+        return postMapper.insert(post);
+    }
+
+    public PostDetail insertDetail(PostDetail postDetail) {
+        return postDetailMapper.insert(postDetail);
+    }
 }
