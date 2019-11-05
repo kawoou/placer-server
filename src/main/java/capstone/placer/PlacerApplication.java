@@ -11,6 +11,7 @@ public class PlacerApplication extends SpringBootServletInitializer {
     public static void main(String[] args) {
         SpringApplication.run(PlacerApplication.class, args);
     }
+
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
         return builder.sources(PlacerApplication.class);

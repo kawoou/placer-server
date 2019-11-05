@@ -40,7 +40,6 @@ public class UserService {
         String encryptedPassword = userMapper.getEncryptedPassword(mail);
         if (passwordEncoder.matches(password, encryptedPassword)) {
             return userMapper.getByMail(mail);
-        }
-        else return null;
+        } else return null;
     }
 }
