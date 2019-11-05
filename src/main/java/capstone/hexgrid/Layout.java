@@ -4,6 +4,7 @@ public class Layout { // Flat Layout only implementation - can be expanded by ma
     protected final Orientation or;
     protected final Point size;
     protected final Point origin;
+
     protected Layout(Point size_, Point origin_) {
         or = new Orientation(3.0 / 2.0, 0.0, StrictMath.sqrt(3.0) / 2.0, StrictMath.sqrt(3.0), 2.0 / 3.0, 0.0, -1.0 / 3.0, StrictMath.sqrt(3.0) / 3.0, 0.0);
         size = size_;

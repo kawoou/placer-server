@@ -11,15 +11,20 @@ class GPSConverter implements Converter {
         this.layout = new Layout(new Point(rate * 0.001, 0.001), center);
     }
 
+    public GPSConverter(double size) {
+        Point center = new Point(center_long, center_lat);
+        this.layout = new Layout(new Point(rate * size, size), center);
+    }
+
     public GPSConverter(Layout l_) {
         this.layout = l_;
     }
 
 
     public Hex pointToHex(Point p_) {
-        Point p = new Point((p_.x - layout.origin.x) / layout.size.x, (p_.y - layout.origin.y) / layout.size.y);
-        double q = layout.or.b0 * p.x + layout.or.b1 * p.y;
-        double r = layout.or.b2 * p.x + layout.or.b3 * p.y;
+        Point p = new Point((p_.x - this.layout.origin.x) / this.layout.size.x, (p_.y - this.layout.origin.y) / this.layout.size.y);
+        double q = this.layout.or.b0 * p.x + this.layout.or.b1 * p.y;
+        double r = this.layout.or.b2 * p.x + this.layout.or.b3 * p.y;
 
         return Hex.hexRound(q, r, -q - r);
     }
