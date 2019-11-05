@@ -84,6 +84,12 @@
             <artifactId>aws-java-sdk</artifactId>
             <version>1.11.524</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.drewnoakes</groupId>
+            <artifactId>metadata-extractor</artifactId>
+            <version>2.12.0</version>
+        </dependency>
     </dependencies>
 
     <build>
