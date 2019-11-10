@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -13,8 +14,39 @@ public class PostService {
     private final PostMapper postMapper;
     private final PostDetailMapper postDetailMapper;
 
-    public List<Post> get(Paging paging) {
-        return postMapper.get(paging.getPageNumber(), Paging.PAGE_SIZE);
+    public List<PostWithLike> get(Paging paging, long userId) {
+        return postMapper.get(paging.getPageNumber(), Paging.PAGE_SIZE).stream()
+                .map(post -> new PostWithLike(post, postMapper.getCurrentLikeStatus(post.getId(), userId)))
+                .collect(Collectors.toList());
+    }
+
+    public List<PostWithLike> getByTime(Paging paging, long userId, double latitude, double longitude, double zoom) {
+        return postMapper.getByTime(paging.getPageNumber(), Paging.PAGE_SIZE).stream()
+                .map(post -> new PostWithLike(post, postMapper.getCurrentLikeStatus(post.getId(), userId)))
+                .collect(Collectors.toList());
+    }
+
+    public List<PostWithLike> getByPopularity(Paging paging, long userId, double latitude, double longitude, double zoom) {
+        return postMapper.getByPopularity(paging.getPageNumber(), Paging.PAGE_SIZE).stream()
+                .map(post -> new PostWithLike(post, postMapper.getCurrentLikeStatus(post.getId(), userId)))
+                .collect(Collectors.toList());
+    }
+
+    public boolean getCurrentLikeStatus(long postId, long userId) {
+        return postMapper.getCurrentLikeStatus(postId, userId);
+    }
+
+    public boolean toggleLike(long postId, long userId) {
+        boolean currentLikeStatus = postMapper.getCurrentLikeStatus(postId, userId);
+
+        // the user already likes the post
+        if (currentLikeStatus)
+            postMapper.dislike(postId, userId);
+
+        // the user doesn't like the post yet
+        else
+            postMapper.like(postId, userId);
+        return !currentLikeStatus;
     }
 
     public PostDetail getDetail(int postId) {

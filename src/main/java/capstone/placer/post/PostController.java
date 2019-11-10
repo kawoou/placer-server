@@ -1,7 +1,6 @@
 package capstone.placer.post;
 
 import capstone.placer.util.Paging;
-import capstone.placer.util.S3Util;
 import capstone.placer.util.UploadUtil;
 import lombok.Data;
 import lombok.NonNull;
@@ -24,14 +23,26 @@ public class PostController {
     private static final String UPLOAD_PATH = "photos";
 
     @GetMapping("/get/{page}")
-    public List<Post> get(@PathVariable int page) {
+    public List<PostWithLike> get(@PathVariable int page, @RequestParam long userId) {
         Paging paging = new Paging(page);
-        return postService.get(paging);
+        return postService.get(paging, userId);
     }
 
-    @GetMapping("/getDetail/{postId}")
-    public PostDetail getDetail(@PathVariable int postId) {
-        return postService.getDetail(postId);
+    @GetMapping("/getByTime/{page}")
+    public List<PostWithLike> getByTime(@PathVariable int page, @RequestParam long userId, @RequestParam double latitude, @RequestParam double longitude, @RequestParam double zoom) {
+        Paging paging = new Paging(page);
+        return postService.getByTime(paging, userId, latitude, longitude, zoom);
+    }
+
+    @GetMapping("/getByPopularity/{page}")
+    public List<PostWithLike> getByPopularity(@PathVariable int page, @RequestParam long userId, @RequestParam double latitude, @RequestParam double longitude, @RequestParam double zoom) {
+        Paging paging = new Paging(page);
+        return postService.getByPopularity(paging, userId, latitude, longitude, zoom);
+    }
+
+    @PostMapping("/like/{postId}/{userId}")
+    public boolean like(@PathVariable long postId, @PathVariable long userId) {
+        return postService.toggleLike(postId, userId);
     }
 
     @PostMapping("/post")

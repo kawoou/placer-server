@@ -9,8 +9,39 @@
         VALUES(#{writerNickName}, #{address}, #{like}, #{createdAt}, #{comment})
     </insert>
 
+    <insert id="like">
+        INSERT INTO placer.`Like` (`postId`, `userId`, `like`)
+        VALUES (#{postId}, #{userId}, true)
+    </insert>
+
+    <delete id="dislike">
+        DELETE FROM placer.`Like`
+        WHERE postId = #{postId} AND userId = #{userId}
+    </delete>
+
     <select id="get" resultType="capstone.placer.post.Post">
         SELECT *
         FROM placer.`Post`
+        LIMIT (#{pageNumber} - 1) * #{pageSize}, #{pageSize}
+    </select>
+
+    <select id="getByTime" resultType="capstone.placer.post.Post">
+        SELECT *
+        FROM placer.`Post`
+        ORDER BY `createdAt` DESC
+        LIMIT (#{pageNumber} - 1) * #{pageSize}, #{pageSize}
+    </select>
+
+    <select id="getByPopularity" resultType="capstone.placer.post.Post">
+        SELECT *
+        FROM placer.`Post`
+        ORDER BY `like` DESC
+        LIMIT (#{pageNumber} - 1) * #{pageSize}, #{pageSize}
+    </select>
+
+    <select id="getCurrentLikeStatus">
+        SELECT `like`
+        FROM placer.`Post`
+        WHERE postId = #{postId}, userId = #{userId}
     </select>
 </mapper>
