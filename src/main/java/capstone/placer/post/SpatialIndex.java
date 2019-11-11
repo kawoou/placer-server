@@ -1,4 +1,4 @@
-package capstone.placer.spatialindex;
+package capstone.placer.post;
 
 import lombok.Data;
 import lombok.NonNull;
