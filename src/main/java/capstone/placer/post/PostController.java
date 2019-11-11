@@ -1,5 +1,6 @@
 package capstone.placer.post;
 
+import capstone.placer.exif.Extractor;
 import capstone.placer.util.Paging;
 import capstone.placer.util.UploadUtil;
 import lombok.Data;
@@ -51,8 +52,11 @@ public class PostController {
                 , HttpStatus.CREATED);
         String s3Path = img_path.getBody();
 
+        //TODO post, postdetail, spatial index 만들고, s3에 업로드하기.
         Post post = postService.insert(new Post(params.getWriterNickName(), s3Path, params.getComment()));
-        //PostDetail postDetail = postService.insertDetail(new PostDetail(post.getId(), ))
+        PostDetail postDetail = postService.insertDetail(new PostDetail(post.getId(), Extractor.extractExif(file.getBytes()), Extractor.extractGPS(file.getBytes())));
+        //TODO spatial index 만들어서 db에 삽입하기.
+        //postService.insert
         return 0L;
     }
 

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.io.ByteArrayInputStream;
 
-import capstone.placer.post.PostDetail;
 import com.drew.imaging.ImageMetadataReader;
 import com.drew.imaging.ImageProcessingException;
 import com.drew.metadata.Directory;
@@ -14,7 +13,7 @@ import com.drew.metadata.Metadata;
 import com.drew.metadata.Tag;
 
 public class Extractor {
-    public Exif exifExtract(byte[] file) {
+    public static Exif extractExif(byte[] file) {
         ArrayList<Tag> tags = new ArrayList<Tag>();
         ByteArrayInputStream bis = new ByteArrayInputStream(file);
         try {
@@ -36,7 +35,7 @@ public class Extractor {
         return new Exif(tags);
     }
 
-    public Gps GPSExtract(byte[] file) {
+    public static Gps extractGPS(byte[] file) {
         ArrayList<Tag> tags = new ArrayList<Tag>();
         ByteArrayInputStream bis = new ByteArrayInputStream(file);
         try {
@@ -58,13 +57,4 @@ public class Extractor {
         return new Gps(tags);
     }
 
-    public PostDetail toPostDetail(long id, Exif e, Gps g) {
-        return new PostDetail(id, e.aperture, e.focalLength, e.exposureTime, e.iso, e.flash, e.manufacturer, e.lensModel, g.longitude, g.latitude, g.altitude, e.timestamp);
-    }
-
-    public PostDetail Extract(long id, byte[] file) {
-        Exif exif = this.exifExtract(file);
-        Gps gps = this.GPSExtract(file);
-        return this.toPostDetail(id, exif, gps);
-    }
 }

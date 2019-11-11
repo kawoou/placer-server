@@ -4,11 +4,13 @@ import java.util.ArrayList;
 
 import capstone.hexgrid.Point;
 import com.drew.metadata.Tag;
+import lombok.Data;
 
+@Data
 public class Gps {
-    double longitude;
-    double latitude;
-    double altitude;
+    private double longitude;
+    private double latitude;
+    private double altitude;
 
     public Gps(ArrayList<Tag> tags) {
         for (Tag t : tags) {

@@ -1,18 +1,20 @@
 package capstone.placer.exif;
 
 import com.drew.metadata.Tag;
+import lombok.Data;
 
 import java.util.ArrayList;
 
+@Data
 public class Exif {
-    double aperture;
-    double focalLength;
-    int exposureTime;
-    int iso;
-    boolean flash;
-    String manufacturer;
-    String lensModel;
-    String timestamp;
+    private double aperture;
+    private double focalLength;
+    private int exposureTime;
+    private int iso;
+    private boolean flash;
+    private String manufacturer;
+    private String lensModel;
+    private String timestamp;
 
     public Exif(ArrayList<Tag> tags) {
         for (Tag t : tags) {

@@ -1,5 +1,7 @@
 package capstone.placer.post;
 
+import capstone.placer.exif.Exif;
+import capstone.placer.exif.Gps;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NonNull;
@@ -8,6 +10,10 @@ import org.springframework.lang.Nullable;
 @Data
 @AllArgsConstructor
 public class PostDetail {
+
+    public PostDetail(long postId, Exif e, Gps g) {
+        this(postId, e.getAperture(), e.getFocalLength(), e.getExposureTime(), e.getIso(), e.isFlash(), e.getManufacturer(), e.getLensModel(), g.getLongitude(), g.getLatitude(), g.getAltitude(), e.getTimestamp());
+    }
 
     @NonNull
     private long postId;
