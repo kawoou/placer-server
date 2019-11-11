@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.rog//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="capstone.placer.post.SpatialIndexMapper">
+    <select id="getPostIds" resultType="java.lang.Long">
+        SELECT `postId`
+        FROM placer.`spatialIndex`
+        WHERE x = #{x} AND y = #{y}
+    </select>
+
+    <insert id="insert">
+        INSERT INTO placer.`spatialIndex` (`x`, `y`, `level`, `postId`)
+        VALUES(#{x}, #{y}, #{level}, #{postId})
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM placer.`spatialIndex`
+        WHERE postId = #{postId}
+    </delete>
+</mapper>
