@@ -2,12 +2,12 @@ package capstone.hexgrid;
 
 import java.util.ArrayList;
 
-class GPSConverter implements Converter {
+public class GPSConverter implements Converter {
     private static double center_lat = 36.370748;
     private static double center_long = 127.973369;
     private static final double rate = 110.574 / (111.320 * Math.cos(center_lat * Math.PI / 180));
 
-    private static final int levels = 6;
+    public static final int levels = 6;
     private static final double[] size = {0.01, 0.025, 0.07, 0.16, 0.4, 1, 3};
     private static final Layout[] layout = new Layout[GPSConverter.levels];
 

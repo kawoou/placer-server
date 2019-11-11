@@ -1,11 +1,17 @@
 package capstone.placer.post;
 
+import capstone.hexgrid.Hex;
 import capstone.placer.util.Paging;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import capstone.hexgrid.Point;
+import capstone.hexgrid.Converter;
+import capstone.hexgrid.GPSConverter;
 
 @Service
 @RequiredArgsConstructor
@@ -58,8 +64,18 @@ public class PostService {
         return postDetailMapper.insert(postDetail);
     }
 
-    public SpatialIndex insertSpatialIndex(long latitude, long longitude) {
-        SpatialIndex index = new SpatialIndex();
-        return spatialIndexMapper.insert(index);
+    public List<SpatialIndex> insertSpatialIndex(long postId, long latitude, long longitude) {
+        List<SpatialIndex> result = new ArrayList<SpatialIndex>();
+
+        Converter c = new GPSConverter();
+        List<Hex> hexs = c.pointToHex(new Point(longitude, latitude));
+
+        for(int i=0; i<GPSConverter.levels; i++) {
+            Hex h = hexs.get(i);
+            SpatialIndex index = new SpatialIndex(h.q(), h.r(), i, postId);
+            result.add(index);
+            spatialIndexMapper.insert(index);
+        }
+        return result;
     }
 }
