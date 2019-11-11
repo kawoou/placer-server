@@ -9,6 +9,7 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.Bucket;
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -17,8 +18,10 @@ import java.util.List;
 
 public class S3Util {
 
-    private String ACCESS_KEY = "";
-    private String PRIVATE_KEY = "";
+    @Value("${cloud.aws.credentials.accessKey}")
+    private String ACCESS_KEY;
+    @Value("${cloud.aws.credentials.secretKey}")
+    private String PRIVATE_KEY;
 
     private AmazonS3 s3Connection;
 
