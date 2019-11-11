@@ -46,7 +46,7 @@ public class PostService {
         if (currentLikeStatus)
             postMapper.dislike(postId, userId);
 
-        // the user doesn't like the post yet
+            // the user doesn't like the post yet
         else
             postMapper.like(postId, userId);
         return !currentLikeStatus;
@@ -70,7 +70,7 @@ public class PostService {
         Converter c = new GPSConverter();
         List<Hex> hexs = c.pointToHex(new Point(longitude, latitude));
 
-        for(int i=0; i<GPSConverter.levels; i++) {
+        for (int i = 0; i < GPSConverter.levels; i++) {
             Hex h = hexs.get(i);
             SpatialIndex index = new SpatialIndex(h.q(), h.r(), i, postId);
             result.add(index);

@@ -30,7 +30,7 @@ public class GPSConverter implements Converter {
 
     public ArrayList<Hex> pointToHex(Point p_) {
         ArrayList<Hex> results = new ArrayList<Hex>();
-        for(Layout l:GPSConverter.layout) {
+        for (Layout l : GPSConverter.layout) {
             Point p = new Point((p_.x - l.origin.x) / l.size.x, (p_.y - l.origin.y) / l.size.y);
             double q = l.or.b0 * p.x + l.or.b1 * p.y;
             double r = l.or.b2 * p.x + l.or.b3 * p.y;
