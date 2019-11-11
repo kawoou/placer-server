@@ -58,11 +58,19 @@ public class PostController {
 
     @PostMapping("/like/{postId}/{userId}")
     public boolean like(@PathVariable long postId, @PathVariable long userId) throws PostNotExistException, UserNotExistException {
+        if (!postService.isExistPost(postId)) {
+            throw new PostNotExistException("존재하지 않는 포스트입니다.");
+        }
+
+        if (!userService.isExistUser(userId)) {
+            throw new UserNotExistException("존재하지 않는 유저입니다.");
+        }
+
         return postService.toggleLike(postId, userId);
     }
 
     @PostMapping("/post")
-    public long post(@RequestParam("file") MultipartFile file, @RequestParam("info") PostParams params) throws Exception {
+    public Post post(@RequestParam("file") MultipartFile file, @RequestParam("info") PostParams params) throws Exception {
         ResponseEntity<String> img_path = new ResponseEntity<>(UploadUtil.uploadFile(UPLOAD_PATH, file.getOriginalFilename(), file.getBytes())
                 , HttpStatus.CREATED);
         String s3Path = img_path.getBody();
@@ -70,8 +78,8 @@ public class PostController {
         //TODO post, postdetail, spatial index 만들고, s3에 업로드하기.
         Post post = postService.insert(new Post(params.getWriterNickName(), s3Path, params.getComment()));
         PostDetail postDetail = postService.insertDetail(new PostDetail(post.getId(), Extractor.extractExif(file.getBytes()), Extractor.extractGPS(file.getBytes())));
-        //TODO spatial index 만들어서 db에 삽입하기.
-        return 0L;
+        postService.insertSpatialIndex(post.getId(), postDetail.getLatitude(), postDetail.getLongitude());
+        return post;
     }
 
     @Data

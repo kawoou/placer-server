@@ -63,8 +63,8 @@ public class PostService {
         return postDetailMapper.insert(postDetail);
     }
 
-    public List<SpatialIndex> insertSpatialIndex(long postId, long latitude, long longitude) {
-        List<SpatialIndex> result = new ArrayList<SpatialIndex>();
+    public List<SpatialIndex> insertSpatialIndex(long postId, double latitude, double longitude) {
+        List<SpatialIndex> result = new ArrayList<>();
 
         Converter c = new GPSConverter();
         List<Hex> hexs = c.pointToHex(new Point(longitude, latitude));
