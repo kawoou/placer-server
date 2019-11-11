@@ -14,11 +14,6 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/get/{id}")
-    public List<User> get(@PathVariable long id) {
-        return userService.get(id);
-    }
-
     @PostMapping("/register")
     public boolean register(@RequestParam("nickname") String nickname, @RequestParam("mail") String mail, @RequestParam("password") String password) {
         boolean registered = userService.register(nickname, mail, password);
