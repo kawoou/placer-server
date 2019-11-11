@@ -1,5 +1,9 @@
 package capstone.hexgrid;
 
-interface Converter {
-    Hex pointToHex(Point p_);
+import java.util.ArrayList;
+
+public interface Converter {
+    Hex pointToHex(Point p_, int level);
+
+    ArrayList<Hex> pointToHex(Point p_);
 }
