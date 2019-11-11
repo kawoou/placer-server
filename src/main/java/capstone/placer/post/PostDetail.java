@@ -1,10 +1,12 @@
 package capstone.placer.post;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NonNull;
 import org.springframework.lang.Nullable;
 
 @Data
+@AllArgsConstructor
 public class PostDetail {
 
     @NonNull
@@ -48,8 +50,11 @@ public class PostDetail {
     @NonNull
     private double latitude;
 
+    // 고도
+    @Nullable
+    private double altitude;
+
     // 시간
     @NonNull
-    private long timestamp;
-
+    private String timestamp;
 }
