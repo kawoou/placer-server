@@ -13,6 +13,7 @@ public class PostService {
 
     private final PostMapper postMapper;
     private final PostDetailMapper postDetailMapper;
+    private final SpatialIndexMapper spatialIndexMapper;
 
     public List<PostWithLike> get(Paging paging, long userId) {
         return postMapper.get(paging.getPageNumber(), Paging.PAGE_SIZE).stream()
@@ -30,10 +31,6 @@ public class PostService {
         return postMapper.getByPopularity(paging.getPageNumber(), Paging.PAGE_SIZE).stream()
                 .map(post -> new PostWithLike(post, postMapper.getCurrentLikeStatus(post.getId(), userId)))
                 .collect(Collectors.toList());
-    }
-
-    public boolean getCurrentLikeStatus(long postId, long userId) {
-        return postMapper.getCurrentLikeStatus(postId, userId);
     }
 
     public boolean toggleLike(long postId, long userId) {
@@ -59,5 +56,10 @@ public class PostService {
 
     public PostDetail insertDetail(PostDetail postDetail) {
         return postDetailMapper.insert(postDetail);
+    }
+
+    public SpatialIndex insertSpatialIndex(long latitude, long longitude) {
+        SpatialIndex index = new SpatialIndex();
+        return spatialIndexMapper.insert(index);
     }
 }
