@@ -4,7 +4,7 @@ package capstone.placer.post;
 import java.util.List;
 
 public interface PostMapper {
-    List<Post> get(int pageNumber, int pageSize);
+    Post get(long postId);
 
     List<Post> getByTime(int pageNumber, int pageSize);
 

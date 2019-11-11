@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -15,10 +16,8 @@ public class PostService {
     private final PostDetailMapper postDetailMapper;
     private final SpatialIndexMapper spatialIndexMapper;
 
-    public List<PostWithLike> get(Paging paging, long userId) {
-        return postMapper.get(paging.getPageNumber(), Paging.PAGE_SIZE).stream()
-                .map(post -> new PostWithLike(post, postMapper.getCurrentLikeStatus(post.getId(), userId)))
-                .collect(Collectors.toList());
+    public Post get(long postId) {
+        return postMapper.get(postId);
     }
 
     public List<PostWithLike> getByTime(Paging paging, long userId, double latitude, double longitude, double zoom) {
@@ -46,7 +45,7 @@ public class PostService {
         return !currentLikeStatus;
     }
 
-    public PostDetail getDetail(int postId) {
+    public PostDetail getDetail(long postId) {
         return postDetailMapper.getDetail(postId);
     }
 
@@ -61,5 +60,9 @@ public class PostService {
     public SpatialIndex insertSpatialIndex(long latitude, long longitude) {
         SpatialIndex index = new SpatialIndex();
         return spatialIndexMapper.insert(index);
+    }
+
+    public boolean isExistPost(long postId) {
+        return Objects.nonNull(this.get(postId));
     }
 }

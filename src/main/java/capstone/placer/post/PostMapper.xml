@@ -22,7 +22,7 @@
     <select id="get" resultType="capstone.placer.post.Post">
         SELECT *
         FROM placer.`Post`
-        LIMIT (#{pageNumber} - 1) * #{pageSize}, #{pageSize}
+        WHERE postId = #{postId}
     </select>
 
     <select id="getByTime" resultType="capstone.placer.post.Post">
@@ -39,7 +39,7 @@
         LIMIT (#{pageNumber} - 1) * #{pageSize}, #{pageSize}
     </select>
 
-    <select id="getCurrentLikeStatus">
+    <select id="getCurrentLikeStatus" resultType="boolean">
         SELECT `like`
         FROM placer.`Post`
         WHERE postId = #{postId}, userId = #{userId}

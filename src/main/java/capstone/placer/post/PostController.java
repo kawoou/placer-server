@@ -1,6 +1,9 @@
 package capstone.placer.post;
 
+import capstone.placer.exception.PostNotExistException;
+import capstone.placer.exception.UserNotExistException;
 import capstone.placer.exif.Extractor;
+import capstone.placer.user.UserService;
 import capstone.placer.util.Paging;
 import capstone.placer.util.UploadUtil;
 import lombok.Data;
@@ -20,29 +23,41 @@ import java.util.List;
 public class PostController {
 
     private final PostService postService;
+    private final UserService userService;
 
     private static final String UPLOAD_PATH = "photos";
 
-    @GetMapping("/get/{page}")
-    public List<PostWithLike> get(@PathVariable int page, @RequestParam long userId) {
-        Paging paging = new Paging(page);
-        return postService.get(paging, userId);
-    }
-
     @GetMapping("/getByTime/{page}")
-    public List<PostWithLike> getByTime(@PathVariable int page, @RequestParam long userId, @RequestParam double latitude, @RequestParam double longitude, @RequestParam double zoom) {
+    public List<PostWithLike> getByTime(@PathVariable int page, @RequestParam long userId, @RequestParam double latitude, @RequestParam double longitude, @RequestParam double zoom) throws UserNotExistException {
+        if (!userService.isExistUser(userId)) {
+            throw new UserNotExistException("존재하지 않는 유저입니다.");
+        }
+
         Paging paging = new Paging(page);
         return postService.getByTime(paging, userId, latitude, longitude, zoom);
     }
 
     @GetMapping("/getByPopularity/{page}")
-    public List<PostWithLike> getByPopularity(@PathVariable int page, @RequestParam long userId, @RequestParam double latitude, @RequestParam double longitude, @RequestParam double zoom) {
+    public List<PostWithLike> getByPopularity(@PathVariable int page, @RequestParam long userId, @RequestParam double latitude, @RequestParam double longitude, @RequestParam double zoom) throws UserNotExistException {
+        if (!userService.isExistUser(userId)) {
+            throw new UserNotExistException("존재하지 않는 유저입니다.");
+        }
+
         Paging paging = new Paging(page);
         return postService.getByPopularity(paging, userId, latitude, longitude, zoom);
     }
 
+    @GetMapping("/detail/{postId}")
+    public PostDetail getDetail(@PathVariable long postId) throws PostNotExistException {
+        if (!postService.isExistPost(postId)) {
+            throw new PostNotExistException("존재하지 않는 포스트입니다.");
+        }
+        return postService.getDetail(postId);
+    }
+
+
     @PostMapping("/like/{postId}/{userId}")
-    public boolean like(@PathVariable long postId, @PathVariable long userId) {
+    public boolean like(@PathVariable long postId, @PathVariable long userId) throws PostNotExistException, UserNotExistException {
         return postService.toggleLike(postId, userId);
     }
 
@@ -56,7 +71,6 @@ public class PostController {
         Post post = postService.insert(new Post(params.getWriterNickName(), s3Path, params.getComment()));
         PostDetail postDetail = postService.insertDetail(new PostDetail(post.getId(), Extractor.extractExif(file.getBytes()), Extractor.extractGPS(file.getBytes())));
         //TODO spatial index 만들어서 db에 삽입하기.
-        //postService.insert
         return 0L;
     }
 

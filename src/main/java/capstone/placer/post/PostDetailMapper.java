@@ -1,7 +1,7 @@
 package capstone.placer.post;
 
 public interface PostDetailMapper {
-    PostDetail getDetail(int postId);
+    PostDetail getDetail(long postId);
 
     PostDetail insert(PostDetail postDetail);
 }
