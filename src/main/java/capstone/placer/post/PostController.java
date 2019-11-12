@@ -73,16 +73,20 @@ public class PostController {
     @PostMapping("/post")
     public Post post(@RequestParam("file") MultipartFile file, @RequestParam("nickName") String nickName, @RequestParam("comment") String comment) throws Exception {
 
+        // upload to S3 Storage
         ResponseEntity<String> img_path = new ResponseEntity<>(UploadUtil.uploadFile(UPLOAD_PATH, file.getOriginalFilename(), file.getBytes())
                 , HttpStatus.CREATED);
         String s3Path = img_path.getBody();
 
+        // Generate Post Instance
         Post post = new Post(nickName, s3Path, comment);
         postService.insert(post);
 
+        // Generate Post Detail Instance using Post Instance's information
         PostDetail postDetail = new PostDetail(post.getId(), Extractor.extractExif(file.getBytes()), Extractor.extractGPS(file.getBytes()));
         postService.insertDetail(postDetail);
 
+        // Generate Spatial Index
         postService.insertSpatialIndex(post.getId(), postDetail.getLatitude(), postDetail.getLongitude());
         return post;
     }
