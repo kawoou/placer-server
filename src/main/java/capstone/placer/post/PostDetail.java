@@ -61,6 +61,6 @@ public class PostDetail {
     private double altitude;
 
     // 시간
-    @NonNull
+    @Nullable
     private String timestamp;
 }
