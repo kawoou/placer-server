@@ -14,7 +14,7 @@ public class GPSConverter implements Converter {
     public GPSConverter() {
         Point center = new Point(center_long, center_lat);
 
-        for (int i = 0; i > GPSConverter.levels; i++) {
+        for (int i = 0; i < GPSConverter.levels; i++) {
             layout[i] = new Layout(new Point(rate * GPSConverter.size[i], GPSConverter.size[i]), center);
         }
     }
