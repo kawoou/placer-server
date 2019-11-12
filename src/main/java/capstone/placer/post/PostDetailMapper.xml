@@ -5,7 +5,9 @@
 
 <mapper namespace="capstone.placer.post.PostDetailMapper">
     <insert id="insert" parameterType="capstone.placer.post.PostDetail">
-        INSERT plcaer.`PostDetail`
+        INSERT INTO placer.PostDetail (postId, aperture, focalLength, exposureTime, iso, flash, manufacturer, lensModel, longitude, latitude, altitude, `timestamp`)
+        VALUES (#{postId}, #{aperture}, #{focalLength}, #{exposureTime}, #{iso}, #{flash}, #{manufacturer}, #{lensModel}, #{longitude}, #{latitude}, #{altitude}, #{timestamp})
+
     </insert>
 
     <select id="getDetail" resultType="capstone.placer.post.PostDetail">

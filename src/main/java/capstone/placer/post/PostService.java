@@ -55,12 +55,12 @@ public class PostService {
         return postDetailMapper.getDetail(postId);
     }
 
-    public Post insert(Post post) {
-        return postMapper.insert(post);
+    public void insert(Post post) {
+        postMapper.insert(post);
     }
 
-    public PostDetail insertDetail(PostDetail postDetail) {
-        return postDetailMapper.insert(postDetail);
+    public void insertDetail(PostDetail postDetail) {
+        postDetailMapper.insert(postDetail);
     }
 
     public List<SpatialIndex> insertSpatialIndex(long postId, double latitude, double longitude) {

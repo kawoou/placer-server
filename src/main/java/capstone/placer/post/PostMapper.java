@@ -16,5 +16,5 @@ public interface PostMapper {
 
     void dislike(long postId, long userId);
 
-    Post insert(Post post);
+    void insert(Post post);
 }

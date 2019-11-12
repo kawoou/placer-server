@@ -5,6 +5,7 @@ import capstone.placer.exception.UserNotExistException;
 import capstone.placer.exif.Extractor;
 import capstone.placer.user.UserService;
 import capstone.placer.util.Paging;
+import capstone.placer.util.S3Util;
 import capstone.placer.util.UploadUtil;
 import lombok.Data;
 import lombok.NonNull;
@@ -70,26 +71,22 @@ public class PostController {
     }
 
     @PostMapping("/post")
-    public Post post(@RequestParam("file") MultipartFile file, @RequestParam("info") PostParams params) throws Exception {
+    public Post post(@RequestParam("file") MultipartFile file, @RequestParam("nickName") String nickName, @RequestParam("comment") String comment) throws Exception {
+
         ResponseEntity<String> img_path = new ResponseEntity<>(UploadUtil.uploadFile(UPLOAD_PATH, file.getOriginalFilename(), file.getBytes())
                 , HttpStatus.CREATED);
         String s3Path = img_path.getBody();
 
-        //TODO post, postdetail, spatial index 만들고, s3에 업로드하기.
-        Post post = postService.insert(new Post(params.getWriterNickName(), s3Path, params.getComment()));
-        PostDetail postDetail = postService.insertDetail(new PostDetail(post.getId(), Extractor.extractExif(file.getBytes()), Extractor.extractGPS(file.getBytes())));
+        Post post = new Post(nickName, s3Path, comment);
+        postService.insert(post);
+
+        PostDetail postDetail = new PostDetail(post.getId(), Extractor.extractExif(file.getBytes()), Extractor.extractGPS(file.getBytes()));
+        postService.insertDetail(postDetail);
+
         postService.insertSpatialIndex(post.getId(), postDetail.getLatitude(), postDetail.getLongitude());
         return post;
     }
 
-    @Data
-    private class PostParams {
-        @NonNull
-        private String writerNickName;
-
-        @Nullable
-        private String comment;
-    }
 }
 
 
