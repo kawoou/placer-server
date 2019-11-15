@@ -3,8 +3,6 @@ package capstone.hexgrid;
 import java.util.ArrayList;
 import java.lang.StrictMath;
 
-import static java.lang.StrictMath.sqrt;
-
 public class GPSConverter implements Converter {
     private static double center_lat = 36.370748;
     private static double center_long = 127.973369;
