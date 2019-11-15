@@ -1,6 +1,9 @@
 package capstone.hexgrid;
 
 import java.util.ArrayList;
+import java.lang.StrictMath;
+
+import static java.lang.StrictMath.sqrt;
 
 public class GPSConverter implements Converter {
     private static double center_lat = 36.370748;
@@ -42,7 +45,7 @@ public class GPSConverter implements Converter {
     }
 
     public int zoomToLevel(double meter) {
-        double view_range = meter * GPSConverter.meter_ratio;
+        double view_range = meter * GPSConverter.meter_ratio * StrictMath.sqrt(2.0) / 2;
         int lev = -1;
 
         for (int i = 0; i < GPSConverter.levels; i++) {
