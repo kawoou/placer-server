@@ -11,6 +11,8 @@ public class GPSConverter implements Converter {
     private static final double[] size = {0.01, 0.025, 0.07, 0.16, 0.4, 1, 3};
     private static final Layout[] layout = new Layout[GPSConverter.levels];
 
+    private static final double meter_ratio = 0.0000091;
+
     public GPSConverter() {
         Point center = new Point(center_long, center_lat);
 
@@ -37,5 +39,21 @@ public class GPSConverter implements Converter {
             results.add(Hex.hexRound(q, r, -q - r));
         }
         return results;
+    }
+
+    public int zoomToLevel(double meter) {
+        double view_range = meter * GPSConverter.meter_ratio;
+        int lev = -1;
+
+        for (int i = 0; i < GPSConverter.levels; i++) {
+            if (view_range < GPSConverter.size[i]) {
+                lev = i;
+            }
+        }
+        if (lev == -1) {
+            return GPSConverter.levels - 1;
+        } else {
+            return lev;
+        }
     }
 }

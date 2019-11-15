@@ -27,12 +27,24 @@ public class PostService {
     }
 
     public List<PostWithLike> getByTime(Paging paging, long userId, double latitude, double longitude, double zoom) {
+        Converter c = new GPSConverter();
+        Point center = new Point(longitude, latitude);
+
+        int hex_level = c.zoomToLevel(zoom);
+        Hex index = c.pointToHex(center, hex_level);
+
         return postMapper.getByTime(paging.getPageNumber(), Paging.PAGE_SIZE).stream()
                 .map(post -> new PostWithLike(post, postMapper.getCurrentLikeStatus(post.getId(), userId)))
                 .collect(Collectors.toList());
     }
 
     public List<PostWithLike> getByPopularity(Paging paging, long userId, double latitude, double longitude, double zoom) {
+        Converter c = new GPSConverter();
+        Point center = new Point(longitude, latitude);
+
+        int hex_level = c.zoomToLevel(zoom);
+        Hex index = c.pointToHex(center, hex_level);
+
         return postMapper.getByPopularity(paging.getPageNumber(), Paging.PAGE_SIZE).stream()
                 .map(post -> new PostWithLike(post, postMapper.getCurrentLikeStatus(post.getId(), userId)))
                 .collect(Collectors.toList());
