@@ -6,9 +6,9 @@ import java.util.List;
 public interface PostMapper {
     Post get(long postId);
 
-    List<Post> getByTime(int pageNumber, int pageSize);
+    List<Post> getByTime(int pageNumber, int pageSize, int x, int y, int level);
 
-    List<Post> getByPopularity(int pageNumber, int pageSize);
+    List<Post> getByPopularity(int pageNumber, int pageSize, int x, int y, int level);
 
     boolean getCurrentLikeStatus(long postId, long userId);
 
