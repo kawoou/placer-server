@@ -21,8 +21,8 @@
 
     <select id="get" resultType="capstone.placer.post.Post">
         SELECT *
-        FROM placer.`Post`
-        WHERE postId = #{postId}
+        FROM placer.Post
+        WHERE id = #{postId}
     </select>
 
     <select id="getByTime" resultType="capstone.placer.post.Post">
