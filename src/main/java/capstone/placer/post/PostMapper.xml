@@ -47,7 +47,7 @@
 
     <select id="getCurrentLikeStatus" resultType="boolean">
         SELECT `like`
-        FROM placer.`Post`
-        WHERE postId = #{postId}, userId = #{userId}
+        FROM placer.Like
+        WHERE postId = #{postId} AND userId = #{userId}
     </select>
 </mapper>
