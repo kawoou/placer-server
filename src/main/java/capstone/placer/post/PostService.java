@@ -33,7 +33,7 @@ public class PostService {
         int hex_level = c.zoomToLevel(zoom);
         Hex index = c.pointToHex(center, hex_level);
 
-        return postMapper.getByTime(paging.getPageNumber(), Paging.PAGE_SIZE, index.q(), index.r(), hex_level).stream()
+        return postMapper.getByTime(paging.getNextPageStartOffset(), Paging.PAGE_SIZE, index.q(), index.r(), hex_level).stream()
                 .map(post -> new PostWithLike(post, postMapper.getCurrentLikeStatus(post.getId(), userId)))
                 .collect(Collectors.toList());
     }
@@ -45,7 +45,7 @@ public class PostService {
         int hex_level = c.zoomToLevel(zoom);
         Hex index = c.pointToHex(center, hex_level);
 
-        return postMapper.getByPopularity(paging.getPageNumber(), Paging.PAGE_SIZE, index.q(), index.r(), hex_level).stream()
+        return postMapper.getByPopularity(paging.getNextPageStartOffset(), Paging.PAGE_SIZE, index.q(), index.r(), hex_level).stream()
                 .map(post -> new PostWithLike(post, postMapper.getCurrentLikeStatus(post.getId(), userId)))
                 .collect(Collectors.toList());
     }

@@ -8,6 +8,9 @@ public class Paging {
 
     private int pageNumber;
 
+    public int getNextPageStartOffset() {
+        return (this.pageNumber - 1) * PAGE_SIZE;
+    }
     public Paging(int pageNumber) {
         this.pageNumber = pageNumber;
     }
