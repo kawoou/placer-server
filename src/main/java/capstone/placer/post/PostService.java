@@ -51,16 +51,18 @@ public class PostService {
     }
 
     public boolean toggleLike(long postId, long userId) {
-        boolean currentLikeStatus = postMapper.getCurrentLikeStatus(postId, userId);
+        Boolean currentLikeStatus = postMapper.getCurrentLikeStatus(postId, userId);
 
         // the user already likes the post
-        if (currentLikeStatus)
+        if (Objects.nonNull(currentLikeStatus)) {
             postMapper.dislike(postId, userId);
-
+            return false;
+        }
             // the user doesn't like the post yet
-        else
+        else {
             postMapper.like(postId, userId);
-        return !currentLikeStatus;
+            return true;
+        }
     }
 
     public PostDetail getDetail(long postId) {

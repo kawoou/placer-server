@@ -10,7 +10,7 @@ public interface PostMapper {
 
     List<Post> getByPopularity(int pageNumber, int pageSize, int x, int y, int level);
 
-    boolean getCurrentLikeStatus(long postId, long userId);
+    Boolean getCurrentLikeStatus(long postId, long userId);
 
     void like(long postId, long userId);
 

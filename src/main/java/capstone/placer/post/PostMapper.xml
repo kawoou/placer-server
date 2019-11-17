@@ -10,8 +10,8 @@
     </insert>
 
     <insert id="like">
-        INSERT INTO placer.`Like` (`postId`, `userId`, `like`)
-        VALUES (#{postId}, #{userId}, true)
+        INSERT INTO placer.`Like` (`postId`, `userId`)
+        VALUES (#{postId}, #{userId})
     </insert>
 
     <delete id="dislike">
