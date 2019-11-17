@@ -54,7 +54,7 @@ public class PostService {
         Boolean currentLikeStatus = postMapper.getCurrentLikeStatus(postId, userId);
 
         // the user already likes the post
-        if (Objects.nonNull(currentLikeStatus)) {
+        if (currentLikeStatus) {
             postMapper.dislike(postId, userId);
             return false;
         }
