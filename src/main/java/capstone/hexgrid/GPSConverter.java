@@ -49,6 +49,7 @@ public class GPSConverter implements Converter {
         for (int i = 0; i < GPSConverter.levels; i++) {
             if (view_range < GPSConverter.size[i]) {
                 lev = i;
+                break;
             }
         }
         if (lev == -1) {
