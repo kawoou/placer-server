@@ -12,23 +12,37 @@ public class Gps {
     private double latitude;
     private double altitude;
 
-    public Gps(ArrayList<Tag> tags) {
+    public Gps(ArrayList<Tag> tags) throws IllegalArgumentException {
+        if (tags.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+        boolean long_flag = false;
+        boolean lat_flag = false;
+
         for (Tag t : tags) {
-            if (t.getTagName().equals("GPS Longitude")) {
-                this.longitude = Gps.parsetoDouble(t.getDescription());
-            } else if (t.getTagName().equals("GPS Latitude")) {
-                this.latitude = Gps.parsetoDouble(t.getDescription());
-            } else if (t.getTagName().equals("GPS Altitude")) {
-                this.altitude = Gps.parsetoDouble(t.getDescription());
+            switch (t.getTagName()) {
+                case "GPS Longitude":
+                    this.longitude = Gps.parsetoDouble(t.getDescription());
+                    long_flag = true;
+                    break;
+                case "GPS Latitude":
+                    this.latitude = Gps.parsetoDouble(t.getDescription());
+                    lat_flag = true;
+                    break;
+                case "GPS Altitude":
+                    this.altitude = Gps.parsetoDouble(t.getDescription());
+                    break;
             }
+        }
+        if (!(long_flag && lat_flag)) {
+            throw new IllegalArgumentException();
         }
     }
 
     private static double parsetoDouble(String val) {
         String digits = String.join("", val.split("\"|\'| |\\."));
         String doubleformed = digits.replace('°', '.');
-        double result = Double.parseDouble(doubleformed);
-        return result;
+        return Double.parseDouble(doubleformed);
     }
 
     public Point asPoint() {

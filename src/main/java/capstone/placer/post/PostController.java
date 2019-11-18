@@ -1,8 +1,11 @@
 package capstone.placer.post;
 
+import capstone.placer.exception.MetadataMissingException;
 import capstone.placer.exception.PostNotExistException;
 import capstone.placer.exception.UserNotExistException;
+import capstone.placer.exif.Exif;
 import capstone.placer.exif.Extractor;
+import capstone.placer.exif.Gps;
 import capstone.placer.user.UserService;
 import capstone.placer.util.Paging;
 import capstone.placer.util.S3Util;
@@ -72,6 +75,14 @@ public class PostController {
 
     @PostMapping("/post")
     public Post post(@RequestParam("file") MultipartFile file, @RequestParam("nickName") String nickName, @RequestParam("comment") String comment) throws Exception {
+        Gps gps;
+        Exif exif;
+        try {
+            gps = Extractor.extractGPS(file.getBytes());
+            exif = Extractor.extractExif(file.getBytes());
+        } catch (IllegalArgumentException e) {
+            throw new MetadataMissingException("업로드에 요구되는 정보가 누락된 사진입니다.");
+        }
 
         // upload to S3 Storage
         ResponseEntity<String> img_path = new ResponseEntity<>(UploadUtil.uploadFile(UPLOAD_PATH, file.getOriginalFilename(), file.getBytes())
@@ -83,7 +94,7 @@ public class PostController {
         postService.insert(post);
 
         // Generate Post Detail Instance using Post Instance's information
-        PostDetail postDetail = new PostDetail(post.getId(), Extractor.extractExif(file.getBytes()), Extractor.extractGPS(file.getBytes()));
+        PostDetail postDetail = new PostDetail(post.getId(), exif, gps);
         postService.insertDetail(postDetail);
 
         // Generate Spatial Index
