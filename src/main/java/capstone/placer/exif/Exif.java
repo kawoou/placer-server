@@ -42,7 +42,7 @@ public class Exif {
                 this.exposureTime = Integer.parseInt(t.getDescription().split("/| ")[1]);
             } else if (t.getTagName().equals("ISO Speed Ratings")) {
                 isoFlag = true;
-                this.iso = Integer.parseInt(t.getDescription().split("/| ")[1]);
+                this.iso = Integer.parseInt(t.getDescription());
             } else if (t.getTagName().equals("Flash")) {
                 flashFlag = true;
                 if (t.getDescription().contains("not")) {
