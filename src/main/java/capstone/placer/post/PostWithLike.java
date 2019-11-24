@@ -1,7 +1,9 @@
 package capstone.placer.post;
 
+import lombok.Data;
 import lombok.NonNull;
 
+@Data
 public class PostWithLike extends Post {
     public PostWithLike(String writerNickName, String address, String comment, boolean myLike) {
         super(writerNickName, address, comment);

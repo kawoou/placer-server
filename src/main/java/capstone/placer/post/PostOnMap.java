@@ -1,7 +1,9 @@
 package capstone.placer.post;
 
+import lombok.Data;
 import lombok.NonNull;
 
+@Data
 public class PostOnMap extends Post {
     public PostOnMap(String address, double longitude, double latitude) {
         super("", address, "");
