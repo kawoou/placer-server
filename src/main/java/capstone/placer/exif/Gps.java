@@ -30,7 +30,7 @@ public class Gps {
                     lat_flag = true;
                     break;
                 case "GPS Altitude":
-                    this.altitude = Gps.parsetoDouble(t.getDescription());
+                    this.altitude = Gps.parsealt(t.getDescription());
                     break;
             }
         }
