@@ -26,8 +26,6 @@ public class Exif {
         boolean exposureFlag = false;
         boolean isoFlag = false;
         boolean flashFlag = false;
-        boolean lensMakeFlag = false;
-        boolean lensModelFlag = false;
         boolean timestampFlag = false;
 
         for (Tag t : tags) {
@@ -51,10 +49,8 @@ public class Exif {
                     this.flash = true;
                 }
             } else if (t.getTagName().equals("Lens Make")) {
-                lensMakeFlag = true;
                 this.manufacturer = t.getDescription();
             } else if (t.getTagName().equals("Lens Model")) {
-                lensModelFlag = true;
                 this.lensModel = t.getDescription();
             } else if (t.getTagName().equals("Date/Time Original")) {
                 timestampFlag = true;
@@ -62,7 +58,7 @@ public class Exif {
             }
         }
 
-        if (!(apertureFlag && focalFlag && exposureFlag && isoFlag && flashFlag && lensMakeFlag && lensModelFlag && timestampFlag)) {
+        if (!(apertureFlag && focalFlag && exposureFlag && isoFlag && flashFlag && timestampFlag)) {
             throw new IllegalArgumentException();
         }
     }
