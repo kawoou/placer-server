@@ -1,10 +1,12 @@
 package capstone.placer.post;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NonNull;
 import org.springframework.lang.Nullable;
 
 @Data
+@AllArgsConstructor
 public class Post {
 
     public Post(String writerNickName, String address, String comment) {
