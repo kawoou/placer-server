@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 class PostRequestParam {
 
-    private Double aperture;
+    private double aperture;
 
-    private Double focalLength;
+    private double focalLength;
 
     private Integer exposureTime;
 
