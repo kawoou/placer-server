@@ -75,7 +75,7 @@ public class PostController {
         Exif exif;
         try {
             gps = new Gps(param.getLongitude(), param.getLatitude(), param.getAltitude());
-            exif = new Exif(param.getAperture(), param.getFocalLength(), param.getExposureTime(), param.getIso(), param.getFlash(), param.getManufacturer(), param.getLensModel(), param.getTimestamp());
+            exif = new Exif(param.getAperture(), param.getFocalLength(), param.getExposureTime(), param.getIso(), param.isFlash(), param.getManufacturer(), param.getLensModel(), param.getTimestamp());
         } catch (IllegalArgumentException e) {
             throw new MetadataMissingException("업로드에 요구되는 정보가 누락된 사진입니다.");
         }

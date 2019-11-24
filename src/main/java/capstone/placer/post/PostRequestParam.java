@@ -1,23 +1,21 @@
 package capstone.placer.post;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.stereotype.Component;
 
-@Component
+import java.util.Objects;
+
 @Data
-@AllArgsConstructor
 class PostRequestParam {
 
-    private double aperture;
+    private Double aperture;
 
-    private double focalLength;
+    private Double focalLength;
 
     private Integer exposureTime;
 
     private Integer iso;
 
-    private Boolean flash;
+    private boolean flash;
 
     private String manufacturer;
 
@@ -34,5 +32,22 @@ class PostRequestParam {
     private String nickName;
 
     private String comment;
+
+    public PostRequestParam(Double aperture, Double focalLength, Integer exposureTime, Integer iso, Boolean flash, String manufacturer, String lensModel, double longitude, double latitude, String timestamp, double altitude, String nickName, String comment) {
+        this.aperture = aperture;
+        this.focalLength = focalLength;
+        this.exposureTime = exposureTime;
+        this.iso = iso;
+        if (Objects.isNull(flash)) this.flash = false;
+        else this.flash = flash;
+        this.manufacturer = manufacturer;
+        this.lensModel = lensModel;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.timestamp = timestamp;
+        this.altitude = altitude;
+        this.nickName = nickName;
+        this.comment = comment;
+    }
 
 }
