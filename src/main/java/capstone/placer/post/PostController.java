@@ -8,14 +8,10 @@ import capstone.placer.exif.Extractor;
 import capstone.placer.exif.Gps;
 import capstone.placer.user.UserService;
 import capstone.placer.util.Paging;
-import capstone.placer.util.S3Util;
 import capstone.placer.util.UploadUtil;
-import lombok.Data;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
