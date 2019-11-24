@@ -22,14 +22,17 @@ public class Gps {
         for (Tag t : tags) {
             switch (t.getTagName()) {
                 case "GPS Longitude":
+                    System.out.println(t);
                     this.longitude = Gps.parsetoDouble(t.getDescription());
                     long_flag = true;
                     break;
                 case "GPS Latitude":
+                    System.out.println(t);
                     this.latitude = Gps.parsetoDouble(t.getDescription());
                     lat_flag = true;
                     break;
                 case "GPS Altitude":
+                    System.out.println(t);
                     this.altitude = Gps.parsealt(t.getDescription());
                     break;
             }
