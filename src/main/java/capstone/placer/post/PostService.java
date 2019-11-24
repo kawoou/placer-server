@@ -50,6 +50,36 @@ public class PostService {
                 .collect(Collectors.toList());
     }
 
+    public List<PostOnMap> getForMap(double latitude, double longitude, double zoom) {
+        Converter c = new GPSConverter();
+        Point center = new Point(longitude, latitude);
+
+        int hex_level = c.zoomToLevel(zoom);
+        int required_level;
+        if (hex_level == 0) {
+            required_level = hex_level;
+        } else {
+            required_level = c.zoomToLevel(zoom) - 1;
+        }
+
+        Hex index = c.pointToHex(center, required_level);
+        List<Hex> target_grids = new ArrayList<Hex>();
+        target_grids.add(index);
+        for (int i = 0; i < 6; i++) {
+            target_grids.add(index.neighbor(i));
+        }
+
+        List<PostOnMap> result = new ArrayList<PostOnMap>();
+
+        for (Hex h : target_grids) {
+            result.addAll(postMapper.getByPopularity(1, 3, h.q(), h.r(), required_level).stream()
+                    .map(post -> new PostOnMap(post, postDetailMapper.getDetail(post.getId())))
+                    .collect(Collectors.toList()));
+        }
+
+        return result;
+    }
+
     public boolean toggleLike(long postId, long userId) {
         Boolean currentLikeStatus = postMapper.getCurrentLikeStatus(postId, userId);
 
@@ -58,7 +88,7 @@ public class PostService {
             postMapper.dislike(postId, userId);
             return false;
         }
-            // the user doesn't like the post yet
+        // the user doesn't like the post yet
         else {
             postMapper.like(postId, userId);
             return true;

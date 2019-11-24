@@ -47,6 +47,11 @@ public class PostController {
         return postService.getByPopularity(paging, userId, latitude, longitude, zoom);
     }
 
+    @GetMapping("/getForMap")
+    public List<PostOnMap> getForMap(@RequestParam double latitude, @RequestParam double longitude, @RequestParam double zoom) throws UserNotExistException {
+        return postService.getForMap(latitude, longitude, zoom);
+    }
+
     @GetMapping("/detail/{postId}")
     public PostDetail getDetail(@PathVariable long postId) throws PostNotExistException {
         if (!postService.isExistPost(postId)) {
