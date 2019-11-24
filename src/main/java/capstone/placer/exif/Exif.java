@@ -21,28 +21,18 @@ public class Exif {
             throw new IllegalArgumentException();
         }
 
-        boolean apertureFlag = false;
-        boolean focalFlag = false;
-        boolean exposureFlag = false;
-        boolean isoFlag = false;
-        boolean flashFlag = false;
         boolean timestampFlag = false;
 
         for (Tag t : tags) {
             if (t.getTagName().equals("Aperture Value")) {
-                apertureFlag = true;
                 this.aperture = Double.parseDouble(t.getDescription().split("/")[1]);
             } else if (t.getTagName().equals("Focal Length")) {
-                focalFlag = true;
                 this.focalLength = Double.parseDouble(t.getDescription().split(" ")[0]);
             } else if (t.getTagName().equals("Exposure Time")) {
-                exposureFlag = true;
                 this.exposureTime = Integer.parseInt(t.getDescription().split("/| ")[1]);
             } else if (t.getTagName().equals("ISO Speed Ratings")) {
-                isoFlag = true;
                 this.iso = Integer.parseInt(t.getDescription());
             } else if (t.getTagName().equals("Flash")) {
-                flashFlag = true;
                 if (t.getDescription().contains("not")) {
                     this.flash = false;
                 } else {
@@ -58,7 +48,7 @@ public class Exif {
             }
         }
 
-        if (!(apertureFlag && focalFlag && exposureFlag && isoFlag && flashFlag && timestampFlag)) {
+        if (!timestampFlag) {
             throw new IllegalArgumentException();
         }
     }
