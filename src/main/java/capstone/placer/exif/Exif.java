@@ -1,11 +1,13 @@
 package capstone.placer.exif;
 
 import com.drew.metadata.Tag;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.ArrayList;
 
 @Data
+@AllArgsConstructor
 public class Exif {
     private double aperture;
     private double focalLength;

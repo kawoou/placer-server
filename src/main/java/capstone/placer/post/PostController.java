@@ -70,12 +70,12 @@ public class PostController {
     }
 
     @PostMapping("/post")
-    public Post post(@RequestParam("file") MultipartFile file, @RequestParam("nickName") String nickName, @RequestParam("comment") String comment) throws Exception {
+    public Post post(@ModelAttribute("post") PostRequestParam param, @RequestParam("file") MultipartFile file) throws Exception {
         Gps gps;
         Exif exif;
         try {
-            gps = Extractor.extractGPS(file.getBytes());
-            exif = Extractor.extractExif(file.getBytes());
+            gps = new Gps(param.getLongitude(), param.getLatitude(), param.getAltitude());
+            exif = new Exif(param.getAperture(), param.getFocalLength(), param.getExposureTime(), param.getIso(), param.getFlash(), param.getManufacturer(), param.getLensModel(), param.getTimestamp());
         } catch (IllegalArgumentException e) {
             throw new MetadataMissingException("업로드에 요구되는 정보가 누락된 사진입니다.");
         }
@@ -86,7 +86,7 @@ public class PostController {
         String s3Path = img_path.getBody();
 
         // Generate Post Instance
-        Post post = new Post(nickName, s3Path, comment);
+        Post post = new Post(param.getNickName(), s3Path, param.getComment());
         postService.insert(post);
 
         // Generate Post Detail Instance using Post Instance's information

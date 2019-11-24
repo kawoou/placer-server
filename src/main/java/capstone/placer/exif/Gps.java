@@ -4,9 +4,11 @@ import java.util.ArrayList;
 
 import capstone.hexgrid.Point;
 import com.drew.metadata.Tag;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class Gps {
     private double longitude;
     private double latitude;
