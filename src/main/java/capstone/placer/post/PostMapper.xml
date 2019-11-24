@@ -26,7 +26,7 @@
     </select>
 
     <select id="getByTime" resultType="capstone.placer.post.Post">
-        SELECT Post.id, Post.writerNickName, Post.address, Post.like, Post.createdAt, Post.comment
+        SELECT Post.*
         FROM placer.`Post`
         INNER JOIN placer.`SpatialIndex`
         ON placer.`Post`.`id` = placer.`SpatialIndex`.`postId`
@@ -36,7 +36,7 @@
     </select>
 
     <select id="getByPopularity" resultType="capstone.placer.post.Post">
-        SELECT Post.id, Post.writerNickName, Post.address, Post.like, Post.createdAt, Post.comment
+        SELECT Post.*
         FROM placer.`Post`
         INNER JOIN placer.`SpatialIndex`
         ON placer.`Post`.`id` = placer.`SpatialIndex`.`postId`
