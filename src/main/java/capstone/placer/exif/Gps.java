@@ -45,6 +45,11 @@ public class Gps {
         return Double.parseDouble(doubleformed);
     }
 
+    private static double parsealt(String val) {
+        String digits = String.join("", val.split("metres"));
+        return Double.parseDouble(digits);
+    }
+
     public Point asPoint() {
         return new Point(this.longitude, this.latitude);
     }
