@@ -8,6 +8,7 @@ import capstone.placer.exif.Extractor;
 import capstone.placer.exif.Gps;
 import capstone.placer.user.UserService;
 import capstone.placer.util.Paging;
+import capstone.placer.util.S3Util;
 import capstone.placer.util.UploadUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -88,7 +89,7 @@ public class PostController {
         // upload to S3 Storage
         ResponseEntity<String> img_path = new ResponseEntity<>(UploadUtil.uploadFile(UPLOAD_PATH, file.getOriginalFilename(), file.getBytes())
                 , HttpStatus.CREATED);
-        String s3Path = img_path.getBody();
+        String s3Path = S3Util.getS3UrlPrefix() + img_path.getBody();
 
         // Generate Post Instance
         Post post = new Post(param.getNickName(), s3Path, param.getComment());

@@ -21,6 +21,7 @@ import java.util.Properties;
 public class S3Util {
 
     private static final String PROPERTY_FILE_NAME = "s3.properties";
+    private static String S3_URL_PREFIX;
     private String ACCESS_KEY;
     private String PRIVATE_KEY;
     private AmazonS3 s3Connection;
@@ -29,6 +30,7 @@ public class S3Util {
         Properties s3Property = PropertyLoader.loadProperties(PROPERTY_FILE_NAME);
         ACCESS_KEY = s3Property.getProperty("cloud.aws.credentials.accessKey");
         PRIVATE_KEY = s3Property.getProperty("cloud.aws.credentials.secretKey");
+        S3_URL_PREFIX = s3Property.getProperty("cloud.aws.s3.url");
 
         AWSCredentials credentials = new BasicAWSCredentials(ACCESS_KEY, PRIVATE_KEY);
         ClientConfiguration conf = new ClientConfiguration();
@@ -58,6 +60,10 @@ public class S3Util {
     public String getFileURL(String bucketName, String fileName) {
         String imgName = fileName.replace(File.separatorChar, '/');
         return s3Connection.generatePresignedUrl(new GeneratePresignedUrlRequest(bucketName, imgName)).toString();
+    }
+
+    public static String getS3UrlPrefix() {
+        return S3_URL_PREFIX;
     }
 
 }
