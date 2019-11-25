@@ -11,8 +11,10 @@ import capstone.placer.util.Paging;
 import capstone.placer.util.S3Util;
 import capstone.placer.util.UploadUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -76,9 +78,14 @@ public class PostController {
     }
 
     @PostMapping("/post")
-    public Post post(@ModelAttribute("post") PostRequestParam param, @RequestParam("file") MultipartFile file) throws Exception {
+    public Post post(@ModelAttribute("post") PostRequestParam param, @RequestParam("file") MultipartFile file, @RequestHeader MultiValueMap<String, List<String>> headers) throws Exception {
         Gps gps;
         Exif exif;
+
+        for (String k:headers.keySet()) {
+            System.out.println(k + " - " + headers.get(k));
+        }
+
         try {
             gps = new Gps(param.getLongitude(), param.getLatitude(), param.getAltitude());
             exif = new Exif(param.getAperture(), param.getFocalLength(), param.getExposureTime(), param.getIso(), param.isFlash(), param.getManufacturer(), param.getLensModel(), param.getTimestamp());
