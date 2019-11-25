@@ -4,9 +4,13 @@ import capstone.placer.config.PropertyLoader;
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.Protocol;
 import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.regions.Region;
+import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.Bucket;
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
@@ -35,8 +39,7 @@ public class S3Util {
         AWSCredentials credentials = new BasicAWSCredentials(ACCESS_KEY, PRIVATE_KEY);
         ClientConfiguration conf = new ClientConfiguration();
         conf.setProtocol(Protocol.HTTP);
-        s3Connection = new AmazonS3Client(credentials, conf);
-        s3Connection.setEndpoint("s3.ap-northeast-2.amazonaws.com");
+        s3Connection = AmazonS3ClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(credentials)).withRegion(Regions.valueOf("AP_NORTHEAST_2")).build();
     }
 
     public List<Bucket> getBuckets() {
@@ -47,7 +50,7 @@ public class S3Util {
         s3Connection.putObject(bucketName, folderName + "/", new ByteArrayInputStream(new byte[0]), new ObjectMetadata());
     }
 
-    public void fileUpload(String bucketName, String fileName, byte[] fileData) throws FileNotFoundException {
+    public void fileUpload(String bucketName, String fileName, byte[] fileData) {
         String filePath = fileName.replace(File.separatorChar, '/');
         ObjectMetadata metadata = new ObjectMetadata();
 

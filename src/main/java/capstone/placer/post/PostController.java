@@ -4,14 +4,12 @@ import capstone.placer.exception.MetadataMissingException;
 import capstone.placer.exception.PostNotExistException;
 import capstone.placer.exception.UserNotExistException;
 import capstone.placer.exif.Exif;
-import capstone.placer.exif.Extractor;
 import capstone.placer.exif.Gps;
 import capstone.placer.user.UserService;
 import capstone.placer.util.Paging;
 import capstone.placer.util.S3Util;
 import capstone.placer.util.UploadUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
@@ -78,14 +76,9 @@ public class PostController {
     }
 
     @PostMapping("/post")
-    public Post post(@ModelAttribute("post") PostRequestParam param, @RequestParam("file") MultipartFile file, @RequestHeader MultiValueMap<String, List<String>> headers) throws Exception {
+    public Post post(@ModelAttribute("post") PostRequestParam param, @RequestParam("file") MultipartFile file) throws Exception {
         Gps gps;
         Exif exif;
-
-        for (String k:headers.keySet()) {
-            System.out.println(k + " - " + headers.get(k));
-        }
-
         try {
             gps = new Gps(param.getLongitude(), param.getLatitude(), param.getAltitude());
             exif = new Exif(param.getAperture(), param.getFocalLength(), param.getExposureTime(), param.getIso(), param.isFlash(), param.getManufacturer(), param.getLensModel(), param.getTimestamp());

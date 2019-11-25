@@ -32,7 +32,6 @@
         ON placer.`Post`.`id` = placer.`SpatialIndex`.`postId`
         WHERE placer.`SpatialIndex`.`level` = #{level} AND placer.`SpatialIndex`.`x` = #{x} AND placer.`SpatialIndex`.`y` = #{y}
         ORDER BY `createdAt` DESC
-        LIMIT #{pageNumber}, #{pageSize}
     </select>
 
     <select id="getByPopularity" resultType="capstone.placer.post.Post">
@@ -42,7 +41,6 @@
         ON placer.`Post`.`id` = placer.`SpatialIndex`.`postId`
         WHERE placer.`SpatialIndex`.`level` = #{level} AND placer.`SpatialIndex`.`x` = #{x} AND placer.`SpatialIndex`.`y` = #{y}
         ORDER BY `like` DESC
-        LIMIT #{pageNumber}, #{pageSize}
     </select>
 
     <select id="getCurrentLikeStatus" resultType="boolean">
