@@ -4,18 +4,21 @@ import com.drew.metadata.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 
 @Data
 @AllArgsConstructor
 public class Exif {
-    private double aperture;
-    private double focalLength;
-    private int exposureTime;
-    private int iso;
-    private boolean flash;
+    private Double aperture;
+    private Double focalLength;
+    private Integer exposureTime;
+    private Integer iso;
+    private Boolean flash;
     private String manufacturer;
     private String lensModel;
+
+    @NotNull
     private String timestamp;
 
     public Exif(ArrayList<Tag> tags) throws IllegalArgumentException {
