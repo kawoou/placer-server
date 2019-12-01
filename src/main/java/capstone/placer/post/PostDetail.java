@@ -12,7 +12,7 @@ import org.springframework.lang.Nullable;
 public class PostDetail {
 
     public PostDetail(long postId, Exif e, Gps g) {
-        this(postId, e.getAperture(), e.getFocalLength(), e.getExposureTime(), e.getIso(), e.getFlash(), e.getManufacturer(), e.getLensModel(), g.getLongitude(), g.getLatitude(), e.getTimestamp(), g.getAltitude());
+        this(postId, e.getAperture(), e.getFocalLength(), e.getExposureTime(), e.getIso(), e.getFlash(), e.getManufacturer(), e.getLensModel(), g.getLongitude(), g.getLatitude(), g.getAltitude());
     }
 
     @NonNull
@@ -55,10 +55,6 @@ public class PostDetail {
     // 위도
     @NonNull
     private double latitude;
-
-    // 시간
-    @Nullable
-    private String timestamp;
 
     // 고도
     @Nullable

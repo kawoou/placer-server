@@ -92,7 +92,7 @@ public class PostController {
         String s3Path = S3Util.getS3UrlPrefix() + img_path.getBody();
 
         // Generate Post Instance
-        Post post = new Post(param.getNickName(), s3Path, param.getComment());
+        Post post = new Post(param.getNickName(), s3Path, param.getComment(), exif.getTimestamp());
         postService.insert(post);
 
         // Generate Post Detail Instance using Post Instance's information

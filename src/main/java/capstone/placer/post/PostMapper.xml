@@ -5,8 +5,8 @@
 
 <mapper namespace="capstone.placer.post.PostMapper">
     <insert id="insert" parameterType="capstone.placer.post.Post" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO placer.`Post` (`writerNickName`, `address`, `like`, `createdAt`, `comment`)
-        VALUES(#{writerNickName}, #{address}, #{like}, #{createdAt}, #{comment})
+        INSERT INTO placer.`Post` (`writerNickName`, `address`, `like`, `createdAt`, `comment`, `timestamp`)
+        VALUES(#{writerNickName}, #{address}, #{like}, #{createdAt}, #{comment}, #{timestamp})
     </insert>
 
     <insert id="like">
