@@ -72,9 +72,10 @@ public class PostService {
         List<PostOnMap> result = new ArrayList<PostOnMap>();
 
         for (Hex h : target_grids) {
-            result.addAll(postMapper.getByPopularity(1, 3, h.q(), h.r(), required_level).stream()
+            List<PostOnMap> total_grid = postMapper.getByPopularity(1, 3, h.q(), h.r(), required_level).stream()
                     .map(post -> new PostOnMap(post, postDetailMapper.getDetail(post.getId())))
-                    .collect(Collectors.toList()));
+                    .collect(Collectors.toList());
+            result.addAll(total_grid.subList(0, 5));
         }
 
         return result;
