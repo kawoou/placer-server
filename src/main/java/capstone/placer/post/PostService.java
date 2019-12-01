@@ -75,7 +75,12 @@ public class PostService {
             List<PostOnMap> total_grid = postMapper.getByPopularity(1, 3, h.q(), h.r(), required_level).stream()
                     .map(post -> new PostOnMap(post, postDetailMapper.getDetail(post.getId())))
                     .collect(Collectors.toList());
-            result.addAll(total_grid.subList(0, 5));
+            if (total_grid.size() > 5) {
+                result.addAll(total_grid.subList(0, 5));
+            } else {
+                result.addAll(total_grid);
+            }
+
         }
 
         return result;
