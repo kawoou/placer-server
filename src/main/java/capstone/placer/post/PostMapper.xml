@@ -19,6 +19,18 @@
         WHERE postId = #{postId} AND userId = #{userId}
     </delete>
 
+    <update id="increaseLike">
+        UPDATE placer.Post
+        SET `like` = `like` + 1
+        WHERE id = #{postId}
+    </update>
+
+    <update id="decreaseLike">
+        UPDATE placer.Post
+        SET `like` = `like` - 1
+        WHERE id = #{postId}
+    </update>
+
     <select id="get" resultType="capstone.placer.post.Post">
         SELECT *
         FROM placer.Post

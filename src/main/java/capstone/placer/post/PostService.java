@@ -86,11 +86,13 @@ public class PostService {
         // the user already likes the post
         if (currentLikeStatus) {
             postMapper.dislike(postId, userId);
+            postMapper.decreaseLike(postId);
             return false;
         }
         // the user doesn't like the post yet
         else {
             postMapper.like(postId, userId);
+            postMapper.increaseLike(postId);
             return true;
         }
     }
