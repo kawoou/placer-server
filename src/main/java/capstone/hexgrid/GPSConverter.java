@@ -43,7 +43,7 @@ public class GPSConverter implements Converter {
     }
 
     public int zoomToLevel(double meter) {
-        double view_range = meter * GPSConverter.meter_ratio * StrictMath.sqrt(2.0) / 2;
+        double view_range = meter * GPSConverter.meter_ratio / 2; //* StrictMath.sqrt(2.0) / 2;
         int lev = -1;
 
         for (int i = 0; i < GPSConverter.levels; i++) {
