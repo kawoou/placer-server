@@ -33,7 +33,7 @@ class PostRequestParam {
 
     private String comment;
 
-    public PostRequestParam(Double aperture, Double focalLength, Integer exposureTime, Integer iso, Boolean flash, String manufacturer, String lensModel, double longitude, double latitude, String timestamp, double altitude, String nickName, String comment) {
+    public PostRequestParam(Double aperture, Double focalLength, Integer exposureTime, Integer iso, Boolean flash, String manufacturer, String lensModel, double longitude, double latitude, String timestamp, Double altitude, String nickName, String comment) {
         this.aperture = aperture;
         this.focalLength = focalLength;
         this.exposureTime = exposureTime;
@@ -45,7 +45,8 @@ class PostRequestParam {
         this.longitude = longitude;
         this.latitude = latitude;
         this.timestamp = timestamp;
-        this.altitude = altitude;
+        if (Objects.isNull(altitude)) this.altitude = 0.0;
+        else this.altitude = altitude;
         this.nickName = nickName;
         this.comment = comment;
     }
